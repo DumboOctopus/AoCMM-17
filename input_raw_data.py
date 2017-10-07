@@ -7,9 +7,9 @@ while True:
     else:
         break
 typing_data = "".join(lines)
-typing_data = typing_data.upper().replace("OO", "O").strip()
+typing_data = typing_data.upper()
 
-person_number = input("Person Number: ")
+person_number = raw_input("Person Number: ")
 given_number = input("Given Number: ")
 
 f = open("Data/r_p"+str(person_number) + "g"+str(given_number), "w+")

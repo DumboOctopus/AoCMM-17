@@ -2,11 +2,11 @@
 import os
 from data_cruncher import calculate_and_create_file
 
-person_number = input("person number: ")
+person_number = raw_input("person: ")
 
 person_data_files = []
 for file in os.listdir("Data/"):
-    if file.startswith("r") and file[3:file.index("g")] == str(person_number):
+    if file.startswith("r_p"+person_number):
         person_data_files.append(file)
 
 text = ""
@@ -18,4 +18,4 @@ for filename in person_data_files:
         line = f.readline()
     f.close()
 
-calculate_and_create_file(text, person_number, 20)
+calculate_and_create_file(text, person_number, 99)

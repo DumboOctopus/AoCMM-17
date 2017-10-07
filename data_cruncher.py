@@ -1,4 +1,5 @@
 def calculate_and_create_file(typing_data, personNumber, givenNumber):
+    typing_data = typing_data.upper().replace("OO", "O").strip()
     occurrences = {}
     totals = {}
     states = ['B', 'O', 'D', 'U', 'C'];
@@ -42,18 +43,18 @@ def calculate_and_create_file(typing_data, personNumber, givenNumber):
         f.write(probability+"\n")
 
 # call function
-if  __name__ == "__main__":
-    lines = []
-    while True:
-        line = raw_input()
-        if line:
-            lines.append(line)
-        else:
-            break
-    typing_data = "".join(lines)
-
-    personNumber = input("Person Number: ")
-    givenNumber = input("Given Number: ")
-    typing_data = typing_data.upper().replace("OO", "O").strip()
-
-    calculate_and_create_file(typing_data, personNumber, givenNumber)
+# if  __name__ == "__main__":
+#     lines = []
+#     while True:
+#         line = raw_input()
+#         if line:
+#             lines.append(line)
+#         else:
+#             break
+#     typing_data = "".join(lines)
+#
+#     personNumber = raw_input("Person: ")
+#     givenNumber = raw_input("Given: ")
+#     typing_data = typing_data.upper().replace("OO", "O").strip()
+#
+#     calculate_and_create_file(typing_data, personNumber, givenNumber)
