@@ -17,14 +17,14 @@ typing_data = typing_data.upper()
 
 person = raw_input("Person: ")
 text_id = input("Text id: ")
-is_english = input("Is English (True, False): ")
+is_english = input("Is English (1/0): ")
 is_given = input("Is the person known? (1/0): ")
 ## end get data from user
 
 
 
 ## creates probabilities record and enters it
-occurrences, totals, probabilities = data_cruncher.calculate_and_create_file(typing_data, person, text_id, None, None,write=False)
+occurrences, totals, probabilities = data_cruncher.calculate(typing_data, None, None)
 
 #just checking
 if len(typing_data) > 999: raise Exception("VAR CHAR TOO SMALL BRO")
@@ -40,6 +40,7 @@ else:
 fields_string = "id,"
 values_strings = str(id) + ","
 
+# DOO NOT MODIFY INSERT ORDER OR WE WILL BE SAD WITH COMPARING
 states = ['B', 'O', 'D', 'U', 'C']
 for s1 in states:
     for s2 in states:
@@ -53,13 +54,9 @@ c.execute("INSERT INTO probabilities ({}) VALUES ({})".format(fields_string, val
 
 
 ## creates english_paragraphs or random_paragraphs record
-if is_english:
-    c.execute("INSERT INTO english_paragraphs (person, text_id, typing_data, is_given, is_conglom, probabilities_id) " +
-              "VALUES ('{}',{},'{}',{},{}, {})".format(person, text_id, typing_data, is_given, 0, id))
-else:
-    c.execute(
-        "INSERT INTO random_paragraphs (person, text_id, typing_data, is_given, is_conglom, probabilities_id) " +
-        "VALUES ('{}',{},'{}',{},{}, {})".format(person, text_id, typing_data, is_given, 0, id))
+
+c.execute("INSERT INTO english_paragraphs (person, text_id, typing_data, is_given, is_conglom, probabilities_id, is_english) " +
+              "VALUES ('{}',{},'{}',{},{}, {})".format(person, text_id, typing_data, is_given, 0, id, is_english))
 
 ## end
 

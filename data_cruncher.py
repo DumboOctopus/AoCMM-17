@@ -1,15 +1,12 @@
-def calculate_and_create_file(typing_data, personNumber, givenNumber, in_occurances, in_totals, write=True):
-    typing_data = typing_data.upper().replace("OO", "O").strip()
-    occurrences = {}
-    totals = {}
-    states = ['B', 'O', 'D', 'U', 'C'];
+import aocmm_functions
 
-    if in_occurances == None:
-        for prev_state in states:
-            totals[prev_state] = 0
-            for next_state in states:
-                occurrences[(next_state, prev_state)] = 0
-    else:
+
+def calculate(typing_data, in_occurances, in_totals, write=True):
+    typing_data = typing_data.upper().replace("OO", "O").strip()
+    states = ['B', 'O', 'D', 'U', 'C'];
+    occurrences, totals = aocmm_functions.init_occurances_and_totals(states)
+
+    if in_occurances is not None:
         occurrences = in_occurances
         totals = in_totals
 
@@ -23,12 +20,8 @@ def calculate_and_create_file(typing_data, personNumber, givenNumber, in_occuran
     probabilities = {}
     text = []
     for key in sorted(occurrences.keys()):
-        probability = 0
-        if totals[key[1]] != 0:
-            probability = occurrences[key]/(totals[key[1]] + 0.0)     # 0.0 so it does floating point division
-        output = "P("+key[0]+"|"+ key[1] + ")=" + str(probability)
-
-        text.append(output)
+        probability = aocmm_functions.prob(occurrences[key], totals[key[1]])
+        text.append(aocmm_functions.to_probability_string(key[0], key[1], probability))
         probabilities[key] = probability
 
     # Output

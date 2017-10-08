@@ -1,23 +1,23 @@
-import os, pprint
-from aocmm_functions import get_all_processed_files, parse_processed_filename
+import os, pprint, sqlite3
 from comparer import compare
-
-processed_data_files = get_all_processed_files()
+conn = sqlite3.connect("data.db")
+c = conn.cursor()
+c.execute("SELECT person, text_id from person_data where is_english=1")
+stuffs = c.fetchall()
+print stuffs
 
 data = {}
-for filename1 in processed_data_files:
-    for filename2 in processed_data_files:
-        person_a, given_a = parse_processed_filename(filename1)
-        person_b, given_b = parse_processed_filename(filename2)
+for person_a, text_a in stuffs:
+    for person_b, text_b in stuffs:
 
-        A = compare(person_a, given_a, person_b, given_b)
+        A = compare(person_a, text_a, person_b, text_b)
 
-        stuff ="{}_{}  -  {}_{} = {}".format(person_a, given_a, person_b, given_b, A)
-        if (person_a, given_a) in data:
-            data[(person_a, given_a)].append(stuff)
-            data[(person_a, given_a)] = sorted(data[(person_a, given_a)]) # keeps everything sorted f
+        stuff ="{}_{}  -  {}_{} = {}".format(person_a, text_a, person_b, text_b, A)
+        if (person_a, text_a) in data:
+            data[(person_a, text_a)].append(stuff)
+            data[(person_a, text_a)] = sorted(data[(person_a, text_a)]) # keeps everything sorted f
         else:
-            data[(person_a, given_a)] = [stuff]
+            data[(person_a, text_a)] = [stuff]
 
 pp = pprint.PrettyPrinter(indent=4)
 pp.pprint(data)
