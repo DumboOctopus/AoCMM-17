@@ -1,4 +1,5 @@
 import data_cruncher
+
 lines = []
 while True:
     line = raw_input()

@@ -1,13 +1,17 @@
-def calculate_and_create_file(typing_data, personNumber, givenNumber):
+def calculate_and_create_file(typing_data, personNumber, givenNumber, in_occurances, in_totals, write=True):
     typing_data = typing_data.upper().replace("OO", "O").strip()
     occurrences = {}
     totals = {}
     states = ['B', 'O', 'D', 'U', 'C'];
 
-    for prev_state in states:
-        totals[prev_state] = 0
-        for next_state in states:
-            occurrences[(next_state, prev_state)] = 0
+    if in_occurances == None:
+        for prev_state in states:
+            totals[prev_state] = 0
+            for next_state in states:
+                occurrences[(next_state, prev_state)] = 0
+    else:
+        occurrences = in_occurances
+        totals = in_totals
 
     for i in xrange(len(typing_data) - 1):
         prev_state = typing_data[i]
@@ -30,17 +34,20 @@ def calculate_and_create_file(typing_data, personNumber, givenNumber):
 
 
     # Output
-    print "Processed Input: ", typing_data
-    print "===================ALL Probabilities==============="
-    for probability in probabilities:
-        print probability
-    print "==================NON ZERO Probs==================="
-    for probability in non_zero_probabilities:
-        print probability
+    if write:
+        print "Processed Input: ", typing_data
+        print "===================ALL Probabilities==============="
+        for probability in probabilities:
+            print probability
+        print "==================NON ZERO Probs==================="
+        for probability in non_zero_probabilities:
+            print probability
 
-    f = open("Data/p_p"+ str(personNumber) + "g"+ str(givenNumber), "w+")
-    for probability in probabilities:
-        f.write(probability+"\n")
+        f = open("Data/p_p"+ str(personNumber) + "g"+ str(givenNumber), "w+")
+        for probability in probabilities:
+            f.write(probability+"\n")
+
+    return occurrences, totals, probabilities, non_zero_probabilities
 
 # call function
 # if  __name__ == "__main__":
