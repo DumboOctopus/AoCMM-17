@@ -46,3 +46,27 @@ def probabilities_in_order():
             fields_string += s1 + s2 + ","
     fields_string = fields_string[0:len(fields_string) - 1]
     return fields_string
+
+def insert_probabilities(probabilities,c):
+    probabilities_id = 0
+    c.execute("SELECT id FROM probabilities ORDER BY id DESC LIMIT 1")
+    last_id = c.fetchone()
+    if last_id is None:
+        probabilities_id = 1
+    else:
+        probabilities_id = last_id[0] + 1
+
+    # hard part, creating code which inserts all probabilities
+    fields_string = "id,"
+    values_strings = str(probabilities_id) + ","
+    # DOO NOT MODIFY INSERT ORDER OR WE WILL BE SAD WITH COMPARING
+    states = ['B', 'O', 'D', 'U', 'C']
+    for s1 in states:
+        for s2 in states:
+            transition = s1 + s2
+            fields_string += transition + ","
+            values_strings += str(probabilities[(s1, s2)]) + ","
+    values_strings = values_strings[0:len(values_strings) - 1]
+    fields_string = fields_string[0:len(fields_string) - 1]
+    c.execute("INSERT INTO probabilities ({}) VALUES ({})".format(fields_string, values_strings))
+    return probabilities_id

@@ -3,8 +3,7 @@ import aocmm_functions
 
 def calculate(typing_data, in_occurances, in_totals, write=True):
     typing_data = typing_data.upper().replace("OO", "O").strip()
-    states = ['B', 'O', 'D', 'U', 'C'];
-    occurrences, totals = aocmm_functions.init_occurances_and_totals(states)
+    occurrences, totals = aocmm_functions.init_occurances_and_totals()
 
     if in_occurances is not None:
         occurrences = in_occurances
