@@ -1,8 +1,9 @@
 from decimal import *
+from aocmm_functions import generate_p_filename
 
 def compare(person_a, given_a, person_b, given_b):
-    file1 = open("Data/p_p"+person_a + "g"+given_a, "r")
-    file2 = open("Data/p_p"+person_b + "g"+given_b, "r")
+    file1 = open(generate_p_filename(person_a, given_a), "r")
+    file2 = open(generate_p_filename(person_b, given_b), "r")
 
     A = 0
     for times in xrange(5**2):

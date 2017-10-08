@@ -38,8 +38,4 @@ def calculate_and_create_file(typing_data, personNumber, givenNumber, in_occuran
         for out in text:
             print out
 
-        f = open("Data/p_p" + str(personNumber) + "g" + str(givenNumber), "w+")
-        for line in text:
-            f.write(line + "\n")
-
     return occurrences, totals, probabilities
