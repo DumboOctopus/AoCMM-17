@@ -20,48 +20,26 @@ def calculate_and_create_file(typing_data, personNumber, givenNumber, in_occuran
         occurrences[(next_state, prev_state )] += 1
         totals[prev_state] += 1
 
-    probabilities = []
-    non_zero_probabilities = []
+    probabilities = {}
+    text = []
     for key in sorted(occurrences.keys()):
         probability = 0
         if totals[key[1]] != 0:
             probability = occurrences[key]/(totals[key[1]] + 0.0)     # 0.0 so it does floating point division
         output = "P("+key[0]+"|"+ key[1] + ")=" + str(probability)
 
-        if probability > 0:
-            non_zero_probabilities.append(output)
-        probabilities.append(output)
-
+        text.append(output)
+        probabilities[key] = probability
 
     # Output
     if write:
         print "Processed Input: ", typing_data
         print "===================ALL Probabilities==============="
-        for probability in probabilities:
-            print probability
-        print "==================NON ZERO Probs==================="
-        for probability in non_zero_probabilities:
-            print probability
+        for out in text:
+            print out
 
-        f = open("Data/p_p"+ str(personNumber) + "g"+ str(givenNumber), "w+")
-        for probability in probabilities:
-            f.write(probability+"\n")
+        f = open("Data/p_p" + str(personNumber) + "g" + str(givenNumber), "w+")
+        for line in text:
+            f.write(line + "\n")
 
-    return occurrences, totals, probabilities, non_zero_probabilities
-
-# call function
-# if  __name__ == "__main__":
-#     lines = []
-#     while True:
-#         line = raw_input()
-#         if line:
-#             lines.append(line)
-#         else:
-#             break
-#     typing_data = "".join(lines)
-#
-#     personNumber = raw_input("Person: ")
-#     givenNumber = raw_input("Given: ")
-#     typing_data = typing_data.upper().replace("OO", "O").strip()
-#
-#     calculate_and_create_file(typing_data, personNumber, givenNumber)
+    return occurrences, totals, probabilities
