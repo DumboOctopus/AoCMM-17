@@ -38,18 +38,18 @@ for typing_data, is_english in person_data:
         random_o, random_t,random_p = out
 
 
-c.execute("SELECT probabilities_id from person_data where person={} and is_conglom=1".format(person))
+c.execute("SELECT probabilities_id from person_data where person='{}' and is_conglom=1".format(person))
 result = c.fetchone()
 
 if result is None:
     probabilities_id = insert_probabilities(english_p, c)
     c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
-              +"Values('{}',{},'{}',{},{},{})".format(person, 'NULL', 'NULL', probabilities_id, 1, 1))
+              +"Values('{}',{},'{}',{},{},{})".format(person, -1, 'NULL', probabilities_id, 1, 1))
 
 
     probabilities_id = insert_probabilities(random_p, c)
     c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
-              +"Values('{}',{},'{}',{},{},{})".format(person, 'NULL', 'NULL', probabilities_id, 1, 0))
+              +"Values('{}',{},'{}',{},{},{})".format(person, -2, 'NULL', probabilities_id, 1, 0))
 else:
     # I feel too afraid
     print "already exists meow"

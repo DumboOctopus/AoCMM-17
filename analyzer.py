@@ -9,7 +9,7 @@ print stuffs
 data = {}
 for person_a, text_a in stuffs:
     for person_b, text_b in stuffs:
-        # if text_a != -1 or text_b != -1: continue
+
         A = compare(person_a, text_a, person_b, text_b)
 
         stuff ="{}_{}  -  {}_{} = {}".format(person_a, text_a, person_b, text_b, A)
