@@ -9,13 +9,21 @@ print stuffs
 data = {}
 for person_a, text_a in stuffs:
     for person_b, text_b in stuffs:
+        if text_a != -1 or text_b != -1: continue
+        c.execute("Select is_given from person_unknown where person = '{}'".format(person_a))
+        is_given_a = c.fetchone()[0] == 1
+        if not is_given_a: continue
+        c.execute("Select is_given from person_unknown where person = '{}'".format(person_b))
+        is_given_b = c.fetchone()[0] == 1
+        if is_given_b: continue
+
 
         A = compare(person_a, text_a, person_b, text_b)
 
-        stuff ="{}_{}  -  {}_{} = {}".format(person_a, text_a, person_b, text_b, A)
+        stuff = (person_b, text_b, A)
         if (person_a, text_a) in data:
             data[(person_a, text_a)].append(stuff)
-            data[(person_a, text_a)] = sorted(data[(person_a, text_a)]) # keeps everything sorted f
+            data[(person_a, text_a)] = sorted(data[(person_a, text_a)], key=lambda a: a[2])
         else:
             data[(person_a, text_a)] = [stuff]
 

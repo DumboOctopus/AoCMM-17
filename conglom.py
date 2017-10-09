@@ -46,10 +46,10 @@ if result is None:
     c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
               +"Values('{}',{},'{}',{},{},{})".format(person, -1, 'NULL', probabilities_id, 1, 1))
 
-
-    probabilities_id = insert_probabilities(random_p, c)
-    c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
-              +"Values('{}',{},'{}',{},{},{})".format(person, -2, 'NULL', probabilities_id, 1, 0))
+    if random_p != None:
+        probabilities_id = insert_probabilities(random_p, c)
+        c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
+                  +"Values('{}',{},'{}',{},{},{})".format(person, -2, 'NULL', probabilities_id, 1, 0))
 else:
     # I feel too afraid
     print "already exists meow"
