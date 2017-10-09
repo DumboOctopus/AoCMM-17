@@ -34,18 +34,25 @@ for typing_data, is_english in person_data:
             random_t,
             write=False
         )
-        print out
+        #print out
         random_o, random_t,random_p = out
 
 
-# TODO: IS IT GIVEN?? our data isn't set up to make that easy :(
-probabilities_id = insert_probabilities(english_p, c)
-c.execute("INSERT INTO person_data (person, text_id, typing_data, is_given, probabilities_id, is_conglom, is_english)"
-          +"Values('{}',{},'{}',{},{},{},{})".format(person, 'NULL', 'NULL', 'NULL', probabilities_id, 1, 1))
+c.execute("SELECT probabilities_id from person_data where person={} and is_conglom=1".format(person))
+result = c.fetchone()
 
-probabilities_id = insert_probabilities(random_p, c)
-c.execute("INSERT INTO person_data (person, text_id, typing_data, is_given, probabilities_id, is_conglom, is_english)"
-          +"Values('{}',{},'{}',{},{},{},{})".format(person, 'NULL', 'NULL', 'NULL', probabilities_id, 1, 0))
+if result is None:
+    probabilities_id = insert_probabilities(english_p, c)
+    c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
+              +"Values('{}',{},'{}',{},{},{})".format(person, 'NULL', 'NULL', probabilities_id, 1, 1))
+
+
+    probabilities_id = insert_probabilities(random_p, c)
+    c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
+              +"Values('{}',{},'{}',{},{},{})".format(person, 'NULL', 'NULL', probabilities_id, 1, 0))
+else:
+    # I feel too afraid
+    print "already exists meow"
 
 conn.commit()
 c.close()

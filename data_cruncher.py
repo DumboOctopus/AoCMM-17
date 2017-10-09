@@ -1,6 +1,7 @@
 import aocmm_functions
 
-
+# TODO: Change script so it counts OO as two out of orders. O equal he started writting out of order
+# TODO: but fixed his errors. OO means he wrote 2 out of orders before fixing them.
 def calculate(typing_data, in_occurances, in_totals, write=True):
     typing_data = typing_data.upper().replace("OO", "O").strip()
     occurrences, totals = aocmm_functions.init_occurances_and_totals()

@@ -19,7 +19,6 @@ typing_data = typing_data.upper()
 person = raw_input("Person: ")
 text_id = input("Text id: ")
 is_english = input("Is English (1/0): ")
-is_given = input("Is the person known? (1/0): ")
 ## end get data from user
 
 if len(typing_data) > 999: raise Exception("VAR CHAR TOO SMALL BRO")
@@ -29,8 +28,8 @@ probabilities_id = insert_probabilities(probabilities, c)
 
 ## creates english_paragraphs or random_paragraphs record
 
-c.execute("INSERT INTO person_data (person, text_id, typing_data, is_given, is_conglom, probabilities_id, is_english) " +
-              "VALUES ('{}',{},'{}',{},{}, {}, {})".format(person, text_id, typing_data, is_given, 0, probabilities_id, is_english))
+c.execute("INSERT INTO person_data (person, text_id, typing_data, is_conglom, probabilities_id, is_english) " +
+              "VALUES ('{}',{},'{}',{}, {}, {})".format(person, text_id, typing_data, 0, probabilities_id, is_english))
 
 ## end
 
