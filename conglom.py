@@ -42,9 +42,10 @@ c.execute("SELECT probabilities_id from person_data where person='{}' and is_con
 result = c.fetchone()
 
 if result is None:
-    probabilities_id = insert_probabilities(english_p, c)
-    c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
-              +"Values('{}',{},'{}',{},{},{})".format(person, -1, 'NULL', probabilities_id, 1, 1))
+    if english_p != None:
+        probabilities_id = insert_probabilities(english_p, c)
+        c.execute("INSERT INTO person_data (person, text_id, typing_data, probabilities_id, is_conglom, is_english)"
+                  +"Values('{}',{},'{}',{},{},{})".format(person, -1, 'NULL', probabilities_id, 1, 1))
 
     if random_p != None:
         probabilities_id = insert_probabilities(random_p, c)
